@@ -1,0 +1,23 @@
+.admin-navbar {
+    background-color: #333;
+    padding: 10px;
+  }
+  
+  .admin-navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+  }
+  
+  .admin-navbar li a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+  }
+  
+  .admin-navbar li a:hover {
+    background-color: #575757;
+    border-radius: 4px;
+  }
+  

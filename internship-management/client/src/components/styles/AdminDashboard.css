@@ -1,0 +1,33 @@
+.admin-dashboard {
+    font-family: Arial, sans-serif;
+  }
+  
+  .dashboard-header {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .stats-section {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .management-section {
+    padding: 20px;
+  }
+  
+  .student-list table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .student-list th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .student-list th {
+    background-color: #f2f2f2;
+  }
+  
