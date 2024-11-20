@@ -1,7 +1,9 @@
 'use client'
 import './App.css'
 import { useState } from 'react'
+import MentorDashboard from './components/MentorDashboard';
 import { Bell, BookOpen, Calendar, CheckSquare, FileText, MessageSquare, Send, User, Users } from 'lucide-react'
+import StudentDashboard from './components/StudentDashboard'
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -277,132 +279,139 @@ export default function App() {
               </div>
             )}
           </>
+          // <StudentDashboard />
         ) : (
           // Mentor Dashboard
-          <>
-            <div className="tabs">
-              <button className={`tab ${activeMentorTab === 'overview' ? 'active' : ''}`} onClick={() => setActiveMentorTab('overview')}>Overview</button>
-              <button className={`tab ${activeMentorTab === 'reports' ? 'active' : ''}`} onClick={() => setActiveMentorTab('reports')}>Reports</button>
-              <button className={`tab ${activeMentorTab === 'interns' ? 'active' : ''}`} onClick={() => setActiveMentorTab('interns')}>Interns</button>
-              <button className={`tab ${activeMentorTab === 'compliance' ? 'active' : ''}`} onClick={() => setActiveMentorTab('compliance')}>Compliance</button>
-              <button className={`tab ${activeMentorTab === 'schedule' ? 'active' : ''}`} onClick={() => setActiveMentorTab('schedule')}>Schedule</button>
-            </div>
+          // <>
+          //   <div className="tabs">
+          //     <button className={`tab ${activeMentorTab === 'overview' ? 'active' : ''}`} onClick={() => setActiveMentorTab('overview')}>Overview</button>
+          //     <button className={`tab ${activeMentorTab === 'reports' ? 'active' : ''}`} onClick={() => setActiveMentorTab('reports')}>Reports</button>
+          //     <button className={`tab ${activeMentorTab === 'interns' ? 'active' : ''}`} onClick={() => setActiveMentorTab('interns')}>Interns</button>
+          //     <button className={`tab ${activeMentorTab === 'compliance' ? 'active' : ''}`} onClick={() => setActiveMentorTab('compliance')}>Compliance</button>
+          //     <button className={`tab ${activeMentorTab === 'schedule' ? 'active' : ''}`} onClick={() => setActiveMentorTab('schedule')}>Schedule</button>
+          //   </div>
 
-            {activeMentorTab === 'overview' && (
-              <div className="grid">
-                <div className="card">
-                  <h3 className="card-title">Assigned Interns</h3>
-                  <p>{interns.length} interns under your mentorship</p>
-                  <Users size={48} color="#4299e1" style={{ marginTop: '1rem' }} />
-                </div>
-                <div className="card">
-                  <h3 className="card-title">Pending Reports</h3>
-                  <p>{reports.filter(r => r.status === 'Pending').length} reports need grading</p>
-                  <FileText size={48} color="#4299e1" style={{ marginTop: '1rem' }} />
-                </div>
-                <div className="card">
-                  <h3 className="card-title">Upcoming Meetings</h3>
-                  <p>{meetings.length} scheduled mentor meetings</p>
-                  <Calendar size={48} color="#4299e1" style={{ marginTop: '1rem' }} />
-                </div>
-              </div>
-            )}
+          //   {activeMentorTab === 'overview' && (
+          //     <div className="grid">
+          //       <div className="card">
+          //         <h3 className="card-title">Assigned Interns</h3>
+          //         <p>{interns.length} interns under your mentorship</p>
+          //         <Users size={48} color="#4299e1" style={{ marginTop: '1rem' }} />
+          //       </div>
+          //       <div className="card">
+          //         <h3 className="card-title">Pending Reports</h3>
+          //         <p>{reports.filter(r => r.status === 'Pending').length} reports need grading</p>
+          //         <FileText size={48} color="#4299e1" style={{ marginTop: '1rem' }} />
+          //       </div>
+          //       <div className="card">
+          //         <h3 className="card-title">Upcoming Meetings</h3>
+          //         <p>{meetings.length} scheduled mentor meetings</p>
+          //         <Calendar size={48} color="#4299e1" style={{ marginTop: '1rem' }} />
+          //       </div>
+          //     </div>
+          //   )}
 
-            {activeMentorTab === 'reports' && (
-              <div className="card">
-                <h3 className="card-title">Intern Reports</h3>
-                {reports.map(report => (
-                  <div key={report.id} className="list-item">
-                    <h4>{report.internName} - {report.reportTitle}</h4>
-                    <p>Status: {report.status}</p>
-                    {report.status === 'Pending' && (
-                      <div>
-                        <input type="number" min="0" max="100" placeholder="Grade" className="form-control" style={{ width: '100px', marginRight: '10px' }} />
-                        <button className="btn btn-primary" onClick={() => handleGradeSubmit(report.id, 85)}>Submit Grade</button>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
+          //   {activeMentorTab === 'reports' && (
+          //     <div className="card">
+          //       <h3 className="card-title">Intern Reports</h3>
+          //       {reports.map(report => (
+          //         <div key={report.id} className="list-item">
+          //           <h4>{report.internName} - {report.reportTitle}</h4>
+          //           <p>Status: {report.status}</p>
+          //           {report.status === 'Pending' && (
+          //             <div>
+          //               <input type="number" min="0" max="100" placeholder="Grade" className="form-control" style={{ width: '100px', marginRight: '10px' }} />
+          //               <button className="btn btn-primary" onClick={() => handleGradeSubmit(report.id, 85)}>Submit Grade</button>
+          //             </div>
+          //           )}
+          //         </div>
+          //       ))}
+          //     </div>
+          //   )}
 
-            {activeMentorTab === 'interns' && (
-              <div className="card">
-                <h3 className="card-title">Assigned Interns</h3>
-                {interns.map(intern => (
-                  <div key={intern.id} className="list-item">
-                    <h4>{intern.name}</h4>
-                    <p>Progress: {intern.progress}%</p>
-                    <div className="progress-bar">
-                      <div className="progress-bar-fill" style={{ width: `${intern.progress}%` }}></div>
-                    </div>
-                    <button className="btn btn-primary" style={{ marginTop: '10px' }} onClick={() => alert(`Sending message to ${intern.name}`)}>
-                      <MessageSquare size={16} style={{ marginRight: '5px' }} />
-                      Message
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
+          //   {activeMentorTab === 'interns' && (
+          //     <div className="card">
+          //       <h3 className="card-title">Assigned Interns</h3>
+          //       {interns.map(intern => (
+          //         <div key={intern.id} className="list-item">
+          //           <h4>{intern.name}</h4>
+          //           <p>Progress: {intern.progress}%</p>
+          //           <div className="progress-bar">
+          //             <div className="progress-bar-fill" style={{ width: `${intern.progress}%` }}></div>
+          //           </div>
+          //           <button className="btn btn-primary" style={{ marginTop: '10px' }} onClick={() => alert(`Sending message to ${intern.name}`)}>
+          //             <MessageSquare size={16} style={{ marginRight: '5px' }} />
+          //             Message
+          //           </button>
+          //         </div>
+          //       ))}
+          //     </div>
+          //   )}
 
-            {activeMentorTab === 'compliance' && (
-              <div className="card">
-                <h3 className="card-title">Compliance Checklist</h3>
-                {interns.map(intern => (
-                  <div key={intern.id} className="list-item">
-                    <h4>{intern.name}</h4>
-                    <p>Compliance Status: 
-                      <span className={`badge ${
-                        intern.complianceStatus === 'Complete' ? 'badge-complete' : 
-                        intern.complianceStatus === 'In Progress' ? 'badge-progress' : 
-                        'badge-pending'
-                      }`} style={{ marginLeft: '10px' }}>
-                        {intern.complianceStatus}
-                      </span>
-                    </p>
-                    <select 
-                      className="form-control" 
-                      style={{ width: '200px', marginRight: '10px' }}
-                      onChange={(e) => handleComplianceUpdate(intern.id, e.target.value)}
-                      value={intern.complianceStatus}
-                    >
-                      <option value="Incomplete">Incomplete</option>
-                      <option value="In Progress">In Progress</option>
-                      <option value="Complete">Complete</option>
-                    </select>
-                  </div>
-                ))}
-              </div>
-            )}
+          //   {activeMentorTab === 'compliance' && (
+          //     <div className="card">
+          //       <h3 className="card-title">Compliance Checklist</h3>
+          //       {interns.map(intern => (
+          //         <div key={intern.id} className="list-item">
+          //           <h4>{intern.name}</h4>
+          //           <p>Compliance Status: 
+          //             <span className={`badge ${
+          //               intern.complianceStatus === 'Complete' ? 'badge-complete' : 
+          //               intern.complianceStatus === 'In Progress' ? 'badge-progress' : 
+          //               'badge-pending'
+          //             }`} style={{ marginLeft: '10px' }}>
+          //               {intern.complianceStatus}
+          //             </span>
+          //           </p>
+          //           <select 
+          //             className="form-control" 
+          //             style={{ width: '200px', marginRight: '10px' }}
+          //             onChange={(e) => handleComplianceUpdate(intern.id, e.target.value)}
+          //             value={intern.complianceStatus}
+          //           >
+          //             <option value="Incomplete">Incomplete</option>
+          //             <option value="In Progress">In Progress</option>
+          //             <option value="Complete">Complete</option>
+          //           </select>
+          //         </div>
+          //       ))}
+          //     </div>
+          //   )}
 
-            {activeMentorTab === 'schedule' && (
-              <div className="card">
-                <h3 className="card-title">Schedule Mentor Meetings</h3>
-                <form onSubmit={handleMeetingSchedule}>
-                  <div className="form-group">
-                    <label htmlFor="internName" className="form-label">Intern Name</label>
-                    <input type="text" id="internName" name="internName" className="form-control" required />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="date" className="form-label">Date</label>
-                    <input type="date" id="date" name="date" className="form-control" required />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="time" className="form-label">Time</label>
-                    <input type="time" id="time" name="time" className="form-control" required />
-                  </div>
-                  <button type="submit" className="btn btn-primary">Schedule Meeting</button>
-                </form>
-                <h4 style={{ marginTop: '2rem' }}>Upcoming Meetings</h4>
-                {meetings.map(meeting => (
-                  <div key={meeting.id} className="list-item">
-                    <h4>{meeting.internName}</h4>
-                    <p>Date: {meeting.date} at {meeting.time}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </>
+          //   {activeMentorTab === 'schedule' && (
+          //     <div className="card">
+          //       <h3 className="card-title">Schedule Mentor Meetings</h3>
+          //       <form onSubmit={handleMeetingSchedule}>
+          //         <div className="form-group">
+          //           <label htmlFor="internName" className="form-label">Intern Name</label>
+          //           <input type="text" id="internName" name="internName" className="form-control" required />
+          //         </div>
+          //         <div className="form-group">
+          //           <label htmlFor="date" className="form-label">Date</label>
+          //           <input type="date" id="date" name="date" className="form-control" required />
+          //         </div>
+          //         <div className="form-group">
+          //           <label htmlFor="time" className="form-label">Time</label>
+          //           <input type="time" id="time" name="time" className="form-control" required />
+          //         </div>
+          //         <button type="submit" className="btn btn-primary">Schedule Meeting</button>
+          //       </form>
+          //       <h4 style={{ marginTop: '2rem' }}>Upcoming Meetings</h4>
+          //       {meetings.map(meeting => (
+          //         <div key={meeting.id} className="list-item">
+          //           <h4>{meeting.internName}</h4>
+          //           <p>Date: {meeting.date} at {meeting.time}</p>
+          //         </div>
+          //       ))}
+          //     </div>
+          //   )}
+          // </>
+          <MentorDashboard
+              activeTab={activeMentorTab}
+              setActiveTab={setActiveMentorTab}
+              interns={interns}
+              reports={reports}
+            />
         )}
       </div>
     </div>
